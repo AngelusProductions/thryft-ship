@@ -54,84 +54,83 @@ const ShippingForm = () => {
       [name]: value,
     });
 
-    let fieldErrors: Partial<FormData> = {};
-    switch (name) {
-      case 'instagramHandle':
-        if (!validateInstagramHandle(value)) {
-          fieldErrors.instagramHandle = 'Invalid Instagram handle.';
-        } else {
-          delete fieldErrors.instagramHandle;
-        }
-        break;
-      case 'product':
-        if (!value.trim()) {
-          fieldErrors.product = 'Product is required.';
-        } else {
-          delete fieldErrors.product;
-        }
-        break;
-      case 'email':
-        if (!validateEmail(value)) {
-          fieldErrors.email = 'Invalid email address.';
-        } else {
-          delete fieldErrors.email;
-        }
-        break;
-      case 'confirmEmail':
-        if (value !== formData.email) {
-          fieldErrors.confirmEmail = 'Emails do not match.';
-        } else {
-          delete fieldErrors.confirmEmail;
-        }
-        break;
-      case 'firstName':
-        if (!value.trim()) {
-          fieldErrors.firstName = 'First name is required.';
-        } else {
-          delete fieldErrors.firstName;
-        }
-        break;
-      case 'lastName':
-        if (!value.trim()) {
-          fieldErrors.lastName = 'Last name is required.';
-        } else {
-          delete fieldErrors.lastName;
-        }
-        break;
-      case 'address1':
-        if (!value.trim()) {
-          fieldErrors.address1 = 'Address Line 1 is required.';
-        } else {
-          delete fieldErrors.address1;
-        }
-        break;
-      case 'city':
-        if (!value.trim()) {
-          fieldErrors.city = 'City is required.';
-        } else {
-          delete fieldErrors.city;
-        }
-        break;
-      case 'state':
-        if (!value.trim()) {
-          fieldErrors.state = 'State is required.';
-        } else {
-          delete fieldErrors.state;
-        }
-        break;
-      case 'zip':
-        if (!value.trim()) {
-          fieldErrors.zip = 'Zip code is required.';
-        } else {
-          delete fieldErrors.zip;
-        }
-        break;
-    }
-
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      ...fieldErrors,
-    }));
+    // Validate the field and clear errors if the field is corrected
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      switch (name) {
+        case 'instagramHandle':
+          if (!validateInstagramHandle(value)) {
+            newErrors.instagramHandle = 'Invalid Instagram handle.';
+          } else {
+            delete newErrors.instagramHandle;
+          }
+          break;
+        case 'product':
+          if (!value.trim()) {
+            newErrors.product = 'Product is required.';
+          } else {
+            delete newErrors.product;
+          }
+          break;
+        case 'email':
+          if (!validateEmail(value)) {
+            newErrors.email = 'Invalid email address.';
+          } else {
+            delete newErrors.email;
+          }
+          break;
+        case 'confirmEmail':
+          if (value !== formData.email) {
+            newErrors.confirmEmail = 'Emails do not match.';
+          } else {
+            delete newErrors.confirmEmail;
+          }
+          break;
+        case 'firstName':
+          if (!value.trim()) {
+            newErrors.firstName = 'First name is required.';
+          } else {
+            delete newErrors.firstName;
+          }
+          break;
+        case 'lastName':
+          if (!value.trim()) {
+            newErrors.lastName = 'Last name is required.';
+          } else {
+            delete newErrors.lastName;
+          }
+          break;
+        case 'address1':
+          if (!value.trim()) {
+            newErrors.address1 = 'Address Line 1 is required.';
+          } else {
+            delete newErrors.address1;
+          }
+          break;
+        case 'city':
+          if (!value.trim()) {
+            newErrors.city = 'City is required.';
+          } else {
+            delete newErrors.city;
+          }
+          break;
+        case 'state':
+          if (!value.trim()) {
+            newErrors.state = 'State is required.';
+          } else {
+            delete newErrors.state;
+          }
+          break;
+        case 'zip':
+          if (!value.trim()) {
+            newErrors.zip = 'Zip code is required.';
+          } else {
+            delete newErrors.zip;
+          }
+          break;
+      }
+      return newErrors;
+    });
   };
 
   const handleSubmit = (e: FormEvent) => {
